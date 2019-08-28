@@ -23,6 +23,7 @@ public class Main
         subscriptionKey.setStudent(student);
         subscriptionKey.setCourse(course);
         Subscription subscription = session.get(Subscription.class, subscriptionKey);
+        Purchase purchase = session.get(Purchase.class,1);
         
         System.out.printf("%nОбъект Course из таблицы Courses:%nНазвание <%s> " +
                 "Преподаватель курса: %s%n%n",course.getName(),course.getTeacher().getName());
@@ -30,6 +31,9 @@ public class Main
         System.out.printf("%nПодписка skillbox N 1: Студент %s купил(а) курс %s%nДата покупки: %s%n%n",
                 subscription.getId().getStudent().getName(), subscription.getId().getCourse().getName(),
                 subscription.getSubscriptionDate().toString());
+        System.out.printf("%nПокупка N 1: Студент %s купил(а) курс %s по цене %s руб.%nДата покупки: %s%n%n",
+                        purchase.getStudentName(),purchase.getCourseName(),
+                        purchase.getPrice(),purchase.getSubscriptionDate().toString());
         //======================= End of session =========================================================
         transaction.commit();
         sessionFactory.close();
