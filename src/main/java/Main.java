@@ -6,6 +6,9 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.io.PrintStream;
+import java.io.Serializable;
+
 public class Main
 {
     public static void main(String[] args)
@@ -14,12 +17,19 @@ public class Main
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         //=============== ORM Hibernate Session =======================================================
-        Course course = session.get(Course.class,5);
-
+        Course course = session.get(Course.class,2);
+        Student student = session.get(Student.class,1);
+        SubsPK subscriptionKey = new SubsPK();
+        subscriptionKey.setStudent(student);
+        subscriptionKey.setCourse(course);
+        Subscription subscription = session.get(Subscription.class, subscriptionKey);
+        
         System.out.printf("%nОбъект Course из таблицы Courses:%nНазвание <%s> " +
-                "Преподаватель курса: %s%n",course.getName(),course.getTeacher().getName());
-        //System.out.printf("%nСлучайный студент skillbox: %s %nДата регистрации: %tD%n%n",student.getName(),
-                        //student.getRegistrationDate());
+                "Преподаватель курса: %s%n%n",course.getName(),course.getTeacher().getName());
+        course.getStudents().stream().map(Student::getName).forEach(System.out::println);
+        System.out.printf("%nПодписка skillbox N 1: Студент %s купил(а) курс %s%nДата покупки: %s%n%n",
+                subscription.getId().getStudent().getName(), subscription.getId().getCourse().getName(),
+                subscription.getSubscriptionDate().toString());
         //======================= End of session =========================================================
         transaction.commit();
         sessionFactory.close();
