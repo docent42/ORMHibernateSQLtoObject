@@ -14,10 +14,10 @@ public class Course
     @Column(columnDefinition = "enum")
     private CourseType type;
     private String description;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Teacher teacher;
     @Column(name = "students_count")
-    private int studentsCount;
+    private Integer studentsCount;
     private int price;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Subscriptions",
@@ -73,11 +73,11 @@ public class Course
         this.teacher = teacher;
     }
 
-    public int getStudentsCount() {
+    public Integer getStudentsCount() {
         return studentsCount;
     }
 
-    public void setStudentsCount(int studentsCount) {
+    public void setStudentsCount(Integer studentsCount) {
         this.studentsCount = studentsCount;
     }
 
