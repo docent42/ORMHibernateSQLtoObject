@@ -5,13 +5,13 @@ import javax.persistence.*;
 public class Connection
 {
     @EmbeddedId
-    private SubsPK id;
+    private PurchasePK id;
 
-    public SubsPK getId() {
+    public PurchasePK getId() {
         return id;
     }
 
-    public void setId(SubsPK id) {
+    public void setId(PurchasePK id) {
         this.id = id;
     }
 }
